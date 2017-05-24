@@ -1,3 +1,23 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+root:
+  path:     /
+  defaults: { _controller: FrameworkBundle:Redirect:urlRedirect, path: /en, permanent: true }
+
+login:
+  path:     /login
+  defaults: { _controller: AppBundle:Security:login, _format: html }
+
+list:
+  path:     /{_locale}/{page}.{_format}
+  defaults: { _controller: AppBundle:List:list, _format: html, page: 1 }
+  requirements:
+      _locale:  en|de
+      _format:  html|json
+      page:     \d+
+
+list_category:
+  path:     /{_locale}/{category}/{page}.{_format}
+  defaults: { _controller: AppBundle:List:category, _format: html, page: 1 }
+  requirements:
+      _locale:  en|de
+      _format:  html|json
+      page:     \d+
