@@ -1,0 +1,38 @@
+AppBundle\Entity\Note:
+    type: entity
+    table: note
+    indexes:
+        note_category_id:
+            columns:
+                - category_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        content:
+            type: text
+            nullable: true
+            length: 65535
+            options:
+                fixed: false
+        datetime:
+            type: datetime
+            nullable: true
+    manyToOne:
+        category:
+            targetEntity: Category
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
