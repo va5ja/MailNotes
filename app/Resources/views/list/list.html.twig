@@ -1,9 +1,21 @@
-{# app/Resources/views/lucky/number.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Notes!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block body %}
+    <h1>Notes</h1>
 
-<h1>Notes</h1>
-
-<ul>
-{% for note in notes %}
-    <li>{{ note.content }}</li>
-{% endfor %}
-</ul>
+    <ul>
+        {% for note in notes %}
+            <li>{{ note.content }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

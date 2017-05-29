@@ -3,17 +3,18 @@
 security:
 
     encoders:
-        AppBundle\Entity\User:
-            algorithm: bcrypt
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         in_memory:
             memory: ~
-        our_db_provider:
-            entity:
-                class: AppBundle:User
-                property: username
+        fos_userbundle:
+            id: fos_user.user_provider.username
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -22,7 +23,8 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            pattern: ^/
+            #anonymous: ~
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -30,10 +32,11 @@ security:
 
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
             form_login:
-                login_path: login
-                check_path: login
-                provider: our_db_provider
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+            logout: true
+            anonymous: true
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/, roles: ROLE_ADMIN }
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
