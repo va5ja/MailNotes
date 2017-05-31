@@ -1,0 +1,13 @@
+{
+  "name": "mail-notes",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap-sass": "~3.3",
+    "font-awesome": "~4.7"
+  },
+  "devDependencies": {
+    "grunt": "~1.0",
+    "grunt-contrib-sass": "~0.8",
+    "grunt-contrib-watch": "~1.0"
+  }
+}
