@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}Notes!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-</head>
-<body>
-{% block body %}
-    <h1>Notes</h1>
+{% extends 'base.html.twig' %}
 
-    <ul>
+{% block title %}MailNotes{% endblock %}
+
+{% block body %}
+<h2 class="sub-header">Section title</h2>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Content</th>
+        </tr>
+        </thead>
+        <tbody>
         {% for note in notes %}
-            <li>{{ note.content }}</li>
+            <tr>
+                <td>{{ note.content }}</td>
+            </tr>
         {% endfor %}
-    </ul>
+        </tbody>
+    </table>
+</div>
 {% endblock %}
-{% block javascripts %}{% endblock %}
-</body>
-</html>
