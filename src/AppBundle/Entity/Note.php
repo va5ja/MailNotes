@@ -2,121 +2,170 @@
 
 namespace AppBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  * Note
- *
- * @ORM\Table(name="note", indexes={@ORM\Index(name="note_category_id", columns={"category_id"})})
- * @ORM\Entity
  */
-class Note {
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="IDENTITY")
-	 */
-	private $id;
+class Note
+{
+    /**
+     * @var integer
+     */
+    private $id;
 
-	/**
-	 * @var string
-	 *
-	 * @ORM\Column(name="content", type="text", length=65535, nullable=true)
-	 */
-	private $content;
+    /**
+     * @var string
+     */
+    private $title;
 
-	/**
-	 * @var \DateTime
-	 *
-	 * @ORM\Column(name="datetime", type="datetime", nullable=true)
-	 */
-	private $datetime;
+    /**
+     * @var string
+     */
+    private $content;
 
-	/**
-	 * @var \AppBundle\Entity\Category
-	 *
-	 * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category")
-	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-	 * })
-	 */
-	private $category;
+    /**
+     * @var string
+     */
+    private $slug;
+
+    /**
+     * @var \DateTime
+     */
+    private $datetime;
+
+    /**
+     * @var \AppBundle\Entity\Category
+     */
+    private $category;
 
 
-	/**
-	 * Get id
-	 *
-	 * @return integer
-	 */
-	public function getId() {
-		return $this->id;
-	}
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * Set content
-	 *
-	 * @param string $content
-	 *
-	 * @return Note
-	 */
-	public function setContent($content) {
-		$this->content = $content;
+    /**
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Note
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get content
-	 *
-	 * @return string
-	 */
-	public function getContent() {
-		return $this->content;
-	}
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * Set datetime
-	 *
-	 * @param \DateTime $datetime
-	 *
-	 * @return Note
-	 */
-	public function setDatetime($datetime) {
-		$this->datetime = $datetime;
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Note
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get datetime
-	 *
-	 * @return \DateTime
-	 */
-	public function getDatetime() {
-		return $this->datetime;
-	}
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 
-	/**
-	 * Set category
-	 *
-	 * @param \AppBundle\Entity\Category $category
-	 *
-	 * @return Note
-	 */
-	public function setCategory(\AppBundle\Entity\Category $category = null) {
-		$this->category = $category;
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Note
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get category
-	 *
-	 * @return \AppBundle\Entity\Category
-	 */
-	public function getCategory() {
-		return $this->category;
-	}
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set datetime
+     *
+     * @param \DateTime $datetime
+     *
+     * @return Note
+     */
+    public function setDatetime($datetime)
+    {
+        $this->datetime = $datetime;
+
+        return $this;
+    }
+
+    /**
+     * Get datetime
+     *
+     * @return \DateTime
+     */
+    public function getDatetime()
+    {
+        return $this->datetime;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Note
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
 }
+

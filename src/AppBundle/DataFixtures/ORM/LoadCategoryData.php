@@ -24,24 +24,28 @@ class LoadCategoryData implements FixtureInterface, ContainerAwareInterface
 	{
 		$category = new Category();
 		$category->setName('Series');
+        $category->setSlug('series');
 		$category->setDatetime(new \DateTime());
 		$manager->persist($category);
 		$manager->flush();
 
 		$category = new Category();
 		$category->setName('Photography');
+        $category->setSlug('photography');
 		$category->setDatetime(new \DateTime());
 		$manager->persist($category);
 		$manager->flush();
 
 		$category = new Category();
 		$category->setName('Kickstarter');
+        $category->setSlug('kickstarter');
 		$category->setDatetime(new \DateTime());
 		$manager->persist($category);
 		$manager->flush();
 
 		$category = new Category();
 		$category->setName('Interesting');
+        $category->setSlug('interesting');
 		$category->setDatetime(new \DateTime());
 		$manager->persist($category);
 		$manager->flush();

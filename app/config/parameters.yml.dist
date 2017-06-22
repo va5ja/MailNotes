@@ -18,6 +18,8 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
-    imap_hostname: "{server.host:993/imap/ssl}inbox"
-    imap_username: ~
-    imap_password: ~
+    mailnotes_imap_hostname: "{server.host:993/imap/ssl}inbox"
+    mailnotes_imap_username: ~
+    mailnotes_imap_password: ~
+    mailnotes_postfix: ~
+

@@ -2,8 +2,12 @@ root:
   path:     /
   defaults: { _controller: FrameworkBundle:Redirect:urlRedirect, path: /en, permanent: true }
 
-fos_user:
-  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /{_locale}/profile
 
 list:
   path:     /{_locale}/{page}.{_format}
@@ -14,7 +18,7 @@ list:
       page:     \d+
 
 list_category:
-  path:     /{_locale}/{category}/{page}.{_format}
+  path:     /{_locale}/{categorySlug}/{page}.{_format}
   defaults: { _controller: AppBundle:List:category, _format: html, page: 1 }
   requirements:
       _locale:  en|de

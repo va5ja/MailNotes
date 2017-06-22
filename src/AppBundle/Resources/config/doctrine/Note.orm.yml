@@ -5,6 +5,9 @@ AppBundle\Entity\Note:
         note_category_id:
             columns:
                 - category_id
+        note_slug:
+            columns:
+                - slug
     id:
         id:
             type: integer
@@ -15,10 +18,22 @@ AppBundle\Entity\Note:
             generator:
                 strategy: AUTO
     fields:
+        title:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
         content:
             type: text
             nullable: true
             length: 65535
+            options:
+                fixed: false
+        slug:
+            type: string
+            nullable: true
+            length: 64
             options:
                 fixed: false
         datetime:

@@ -25,6 +25,8 @@ class LoadNoteData implements FixtureInterface, ContainerAwareInterface
 	{
 		$note = new Note();
 		$note->setCategory($manager->getRepository('AppBundle:Category')->findOneBy(['name' => 'Series']));
+		$note->setTitle('The OA');
+        $note->setSlug('the-oa');
 		$note->setContent('The OA
 On Netflix');
 		$note->setDatetime(new \DateTime());
@@ -33,6 +35,8 @@ On Netflix');
 
 		$note = new Note();
 		$note->setCategory($manager->getRepository('AppBundle:Category')->findOneBy(['name' => 'Photography']));
+        $note->setTitle('Digital-Photography');
+        $note->setSlug('digital-photography');
 		$note->setContent('https://alison.com/courses/Digital-Photography');
 		$note->setDatetime(new \DateTime());
 		$manager->persist($note);
@@ -40,6 +44,8 @@ On Netflix');
 
 		$note = new Note();
 		$note->setCategory($manager->getRepository('AppBundle:Category')->findOneBy(['name' => 'Kickstarter']));
+        $note->setTitle('ONEaudio');
+        $note->setSlug('oneaudio');
 		$note->setContent('ONEaudio');
 		$note->setDatetime(new \DateTime());
 		$manager->persist($note);
@@ -47,6 +53,8 @@ On Netflix');
 
 		$note = new Note();
 		$note->setCategory($manager->getRepository('AppBundle:Category')->findOneBy(['name' => 'Interesting']));
+        $note->setTitle('Interesting PHP packages');
+        $note->setSlug('interesting-php-packages');
 		$note->setContent('https://www.sitepoint.com/7-new-or-interesting-php-packages-to-keep-an-eye-on/');
 		$note->setDatetime(new \DateTime());
 		$manager->persist($note);

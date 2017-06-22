@@ -5,6 +5,9 @@ AppBundle\Entity\Category:
         category_name:
             columns:
                 - name
+        category_slug:
+            columns:
+                - slug
     id:
         id:
             type: integer
@@ -16,6 +19,12 @@ AppBundle\Entity\Category:
                 strategy: IDENTITY
     fields:
         name:
+            type: string
+            nullable: true
+            length: 64
+            options:
+                fixed: false
+        slug:
             type: string
             nullable: true
             length: 64

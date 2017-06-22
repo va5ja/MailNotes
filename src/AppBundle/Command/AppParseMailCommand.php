@@ -35,38 +35,41 @@ class AppParseMailCommand extends ContainerAwareCommand
                 }
                 fclose($fd);
 
-                $importEmail = $this->importEmail($rawEmailContent);
-                if ($importEmail === true) {
+                $importEmailResponse = $this->importEmail($rawEmailContent);
+                if ($importEmailResponse === true) {
                     $outputMessage = 'Successfully fetched one email.';
                 } else {
-                    $outputMessage = 'Error occured while fetching message: ' . $importEmail;
+                    $outputMessage = 'Error occured while fetching message: ' . $importEmailResponse;
                 }
 
                 break;
             case 'imap':
-                $hostname = $this->getContainer()->getParameter('imap_hostname');
-                $username = $this->getContainer()->getParameter('imap_username');
-                $password = $this->getContainer()->getParameter('imap_password');
+                $hostname = $this->getContainer()->getParameter('mailnotes_imap_hostname');
+                $username = $this->getContainer()->getParameter('mailnotes_imap_username');
+                $password = $this->getContainer()->getParameter('mailnotes_imap_password');
 
                 try {
                     $inbox = imap_open($hostname, $username, $password);
                     $emails = imap_search($inbox, 'ALL');
 
+                    $fetchedEmails = 0;
                     if ($emails) {
                         $outputMessage = [];
-                        $fetchedEmails = 0;
-                        foreach ($emails as $email_number) {
-                            $rawEmailContent = imap_fetchbody($inbox, $email_number, '');
-                            $importEmail = $this->importEmail($rawEmailContent);
-                            if ($importEmail === true) {
+
+                        foreach ($emails as $emailNumber) {
+                            $rawEmailContent = imap_fetchbody($inbox, $emailNumber, '');
+                            $importEmailResponse = $this->importEmail($rawEmailContent);
+                            if ($importEmailResponse === true) {
                                 $fetchedEmails += 1;
                             } else {
-                                $outputMessage[] = "Error occured while fetching message $email_number: $importEmail";
+                                $outputMessage[] = "Error occured while fetching message $emailNumber: $importEmailResponse";
                             }
+                            imap_delete($inbox, $emailNumber);
                         }
-                        $outputMessage[] = "Successfully fetched $fetchedEmails email(s).";
                     }
+                    $outputMessage[] = "Successfully fetched $fetchedEmails email(s).";
 
+                    imap_expunge($inbox);
                     imap_close($inbox);
                 } catch (ContextErrorException $e) {
                     $outputMessage = $e->getMessage();
@@ -86,28 +89,42 @@ class AppParseMailCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $mailParser = new \ZBateson\MailMimeParser\MailMimeParser();
         $message = $mailParser->parse($rawEmailContent);
-        $categoryName = ucfirst($message->getHeaderValue('subject'));
-        $content = array_map('trim', explode("\n", $message->getTextContent()));
-        $password = array_shift($content);
-        $content = implode("\n", array_filter($content));
+        $noteDate = $message->getHeader('date')->getDatetime();
+        $noteDate->setTimezone(new \DateTimeZone(date_default_timezone_get()));
+        $noteTitle = $message->getHeaderValue('subject');
+        $noteSlug = $this->getContainer()->get('app.slugger')->slugify($noteTitle);
+        $noteContent = array_map('trim', explode("\n", $message->getTextContent()));
+        $notePassword = array_shift($noteContent);
+        $categoryName = array_shift($noteContent);
+        $categorySlug = $this->getContainer()->get('app.slugger')->slugify($categoryName);
+        $noteContent = implode("\n", array_filter($noteContent));
+        $postfix = $this->getContainer()->getParameter('mailnotes_postfix');
         $return = true;
 
-        if ($password === date('d') . '123') {
-            $category = $em->getRepository('AppBundle:Category')->findBy(['name' => $categoryName]);
+        if ($notePassword === $noteDate->format('d') . $postfix) {
+            $category = $em->getRepository('AppBundle:Category')->findOneBy(['slug' => $categorySlug]);
             if (!$category) {
                 $category = new Category();
                 $category->setName($categoryName);
+                $category->setSlug($categorySlug);
                 $category->setDatetime(new \DateTime());
                 $em->persist($category);
                 $em->flush();
             }
 
-            $note = new Note();
-            $note->setCategory($category);
-            $note->setContent($content);
-            $note->setDatetime(new \DateTime());
-            $em->persist($note);
-            $em->flush();
+            $note = $em->getRepository('AppBundle:Note')->findOneBy(['slug' => $noteSlug]);
+            if (!$note) {
+                $note = new Note();
+                $note->setCategory($category);
+                $note->setTitle($noteTitle);
+                $note->setContent($noteContent);
+                $note->setSlug($noteSlug);
+                $note->setDatetime(new \DateTime());
+                $em->persist($note);
+                $em->flush();
+            } else {
+                $return = 'Note "' . $noteTitle . '" already exists.';
+            }
         } else {
             $return = 'Wrong token.';
         }
