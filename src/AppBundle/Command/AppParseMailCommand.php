@@ -24,7 +24,7 @@ class AppParseMailCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $method = $input->getOption('method') ? $input->getOption('method') : 'email-piping';
-        $outputMessage = '';
+        $outputMessage = [];
 
         switch ($method) {
             case 'email-piping':
@@ -37,9 +37,9 @@ class AppParseMailCommand extends ContainerAwareCommand
 
                 $importEmailResponse = $this->importEmail($rawEmailContent);
                 if ($importEmailResponse === true) {
-                    $outputMessage = 'Successfully fetched one email.';
+                    $outputMessage[] = 'Successfully fetched one email.';
                 } else {
-                    $outputMessage = 'Error occured while fetching message: ' . $importEmailResponse;
+                    $outputMessage[] = 'Error occured while fetching message: ' . $importEmailResponse;
                 }
 
                 break;
@@ -54,8 +54,6 @@ class AppParseMailCommand extends ContainerAwareCommand
 
                     $fetchedEmails = 0;
                     if ($emails) {
-                        $outputMessage = [];
-
                         foreach ($emails as $emailNumber) {
                             $rawEmailContent = imap_fetchbody($inbox, $emailNumber, '');
                             $importEmailResponse = $this->importEmail($rawEmailContent);
@@ -72,7 +70,7 @@ class AppParseMailCommand extends ContainerAwareCommand
                     imap_expunge($inbox);
                     imap_close($inbox);
                 } catch (ContextErrorException $e) {
-                    $outputMessage = $e->getMessage();
+                    $outputMessage[] = $e->getMessage();
                 }
                 break;
         }
