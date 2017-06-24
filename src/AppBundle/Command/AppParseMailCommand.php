@@ -39,7 +39,7 @@ class AppParseMailCommand extends ContainerAwareCommand
                 if ($importEmailResponse === true) {
                     $outputMessage[] = 'Successfully fetched one email.';
                 } else {
-                    $outputMessage[] = 'Error occured while fetching message: ' . $importEmailResponse;
+                    $outputMessage[] = 'Error occurred while fetching message: ' . $importEmailResponse;
                 }
 
                 break;
@@ -60,7 +60,7 @@ class AppParseMailCommand extends ContainerAwareCommand
                             if ($importEmailResponse === true) {
                                 $fetchedEmails += 1;
                             } else {
-                                $outputMessage[] = "Error occured while fetching message $emailNumber: $importEmailResponse";
+                                $outputMessage[] = "Error occurred while fetching message $emailNumber: $importEmailResponse";
                             }
                             imap_delete($inbox, $emailNumber);
                         }
