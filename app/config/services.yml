@@ -8,4 +8,7 @@ services:
     #    class: AppBundle\Directory\ClassName
     #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
     app.slugger:
-        class: AppBundle\Utils\Slugger
+        class: va5ja\MailNotesBundle\Utils\Slugger
+    app.entity_helper:
+        class: va5ja\MailNotesBundle\Utils\EntityHelper
+        arguments: [@doctrine.orm.entity_manager]

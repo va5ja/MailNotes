@@ -11,7 +11,7 @@ fos_user_profile:
 
 list:
   path:     /{_locale}/{page}.{_format}
-  defaults: { _controller: AppBundle:List:list, _format: html, page: 1 }
+  defaults: { _controller: MailNotesBundle:List:List, _format: html, page: 1 }
   requirements:
       _locale:  en|de
       _format:  html|json
@@ -19,7 +19,7 @@ list:
 
 list_category:
   path:     /{_locale}/{categorySlug}/{page}.{_format}
-  defaults: { _controller: AppBundle:List:category, _format: html, page: 1 }
+  defaults: { _controller: MailNotesBundle:List:category, _format: html, page: 1 }
   requirements:
       _locale:  en|de
       _format:  html|json
