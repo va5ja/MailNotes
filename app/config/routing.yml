@@ -9,6 +9,10 @@ fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
     prefix: /{_locale}/profile
 
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /{_locale}/profile
+
 list:
   path:     /{_locale}/{page}.{_format}
   defaults: { _controller: MailNotesBundle:List:List, _format: html, page: 1 }

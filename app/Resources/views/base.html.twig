@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li{% if categoryid is defined and not categoryid %} class="active"{% endif %}><a href="{{ path('List') }}">All categories <span class="sr-only">(current)</span></a></li>
+                <li{% if categoryid is defined and not categoryid %} class="active"{% endif %}><a href="{{ path('list') }}">All categories <span class="sr-only">(current)</span></a></li>
 {% for category in entity_helper.getCategories %}
                 <li{% if categoryid is defined and categoryid == category.id %} class="active"{% endif %}><a href="{{ path('list_category', {'categorySlug': category.slug}) }}">{{ category.name }}</a></li>
 {% endfor %}
