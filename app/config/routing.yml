@@ -15,7 +15,7 @@ fos_user_change_password:
 
 list:
   path:     /{_locale}/{page}.{_format}
-  defaults: { _controller: MailNotesBundle:List:List, _format: html, page: 1 }
+  defaults: { _controller: MailNotesBundle:List:list, _format: html, page: 1 }
   requirements:
       _locale:  en|de
       _format:  html|json

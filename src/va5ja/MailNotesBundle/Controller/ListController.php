@@ -15,7 +15,7 @@ class ListController extends Controller
         $notes = $noteRepository->findAll();
 
         return $this->render(
-            'List/list.'.$_format.'.twig',
+            'list/list.'.$_format.'.twig',
             [
                 'categoryid' => false,
                 'notes' => $notes,
@@ -32,7 +32,7 @@ class ListController extends Controller
         $notes = $noteRepository->findby(['category' => $category]);
 
         return $this->render(
-            'List/list.'.$_format.'.twig',
+            'list/list.'.$_format.'.twig',
             [
                 'categoryid' => $category->getId(),
                 'notes' => $notes,
